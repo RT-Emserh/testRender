@@ -1,8 +1,8 @@
 package main
 
 import (
+	"example.com/send"
 	"github.com/gin-gonic/gin"
-	"rabbitmq.com/gin/send"
 )
 
 type Email struct {
