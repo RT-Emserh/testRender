@@ -22,8 +22,15 @@ func Controller(ctx *gin.Context) {
 	})
 }
 
+func oi(ctx *gin.Context) {
+	ctx.JSON(200, gin.H{
+		"message": "onnn",
+	})
+}
+
 func main() {
 	router := gin.Default()
 	router.GET("/mensageria", Controller)
+	router.GET("/oi", oi)
 	router.Run(":8080") // specify the port you want to run the server on
 }
