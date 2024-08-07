@@ -1,9 +1,18 @@
-FROM rabbitmq:3.8.0-management
+# Use uma imagem base do Go
+FROM golang:1.20
 
-COPY rabbitmq.conf /etc/rabbitmq/
+# Defina o diretório de trabalho dentro do container
+WORKDIR /app
 
-ENV RABBITMQ_NODENAME=rabbit@localhost
+# Copie o código-fonte para o diretório de trabalho
+COPY . .
 
-RUN chown rabbitmq:rabbitmq /etc/rabbitmq/rabbitmq.conf
+# Baixe as dependências e compile o aplicativo
+RUN go mod tidy
+RUN go build -o main .
 
-USER rabbitmq:rabbitmq
+# Exponha a porta em que o servidor vai rodar
+EXPOSE 8080
+
+# Execute o aplicativo
+CMD ["./main.go"]

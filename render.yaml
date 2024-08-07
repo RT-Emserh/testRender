@@ -1,15 +1,14 @@
 services:
-- type: web
-  name: rabbitmq
-  env: docker
-  envVars:
-  - key: RABBITMQ_ERLANG_COOKIE
-    generateValue: true
-  - key: RABBITMQ_DEFAULT_USER
-    value: rabbitmq
-  - key: RABBITMQ_DEFAULT_PASS
-    generateValue: true
-  disk:
+  - type: web
+    name: my-go-app
+    env: docker
+    dockerfilePath: ./Dockerfile
+    buildCommand: "go build -o main ."
+    startCommand: "./main"
+    port: 8080
+    plan: free
+  - type: web
     name: rabbitmq
-    mountPath: /var/lib/rabbitmq
-    sizeGB: 10
+    env: docker
+    dockerfilePath: ./Dockerfile-rabbitmq
+    plan: free
